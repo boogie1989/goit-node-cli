@@ -13,41 +13,34 @@ program.parse();
 const options = program.opts();
 
 async function invokeAction(params) {
-    console.log(JSON.stringify(await processAction(params), null, 4));
+    const responce = await processAction(params);
+    if (responce) {
+        console.log(JSON.stringify(responce, null, 4));
+    } else if (responce === null) {
+        console.log(null);
+    }
+    else {
+        console.log('Unknown action');
+    }
 }
 
 
 async function processAction({ action, id, name, email, phone }) {
     switch (action) {
         case "list":
-            return {
-                action: 'Contacts List',
-                data: await listContacts(),
-            };
+            return listContacts();
 
         case "get":
-            return {
-                action: 'Get Contact',
-                data: await getContactById(id),
-            };
+            return getContactById(id);
 
         case "add":
-            return {
-                action: 'Add Contact',
-                data: await addContact(name, email, phone),
-            };
+            return addContact(name, email, phone);
 
         case "remove":
-            return {
-                action: 'Remove Contact',
-                data: await removeContact(id),
-            };
+            return removeContact(id);
 
         default:
-            return {
-                action: 'Unknown action',
-                data: null
-            }
+            return;
     }
 }
 

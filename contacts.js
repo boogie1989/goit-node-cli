@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 import { v4 as uuid } from 'uuid';
 
-const contactsPath = resolve('src', 'db', 'contacts.json');
+const contactsPath = resolve('db', 'contacts.json');
 
 /**
  * @typedef {Object} Contact
@@ -21,13 +21,13 @@ export async function listContacts() {
     return JSON.parse(await readFile(contactsPath));
 }
 
-/**
+/**ƒ
  * 
  * @param {string} contactId 
  * @returns {Promise<Contact | null>} Contact object or null if not found.
  */
 export async function getContactById(contactId) {
-    return (await listContacts()).find(contact => contact.id === contactId);
+    return (await listContacts()).find(contact => contact.id === contactId) ?? null;
 }
 
 /**
